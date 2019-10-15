@@ -1,18 +1,15 @@
 #include <iostream>
- 
+
 template<class T>
-class CRTPHelper
+struct crtp
 {
-public:
     T& underlying() { return static_cast<T&>(*this); }
-    
     const T& underlying() const { return static_cast<const T&>(*this); }
 };
 
 template<class DerivedT>
-class Base : public CRTPHelper<DerivedT>
+struct Base : public crtp<DerivedT>
 {
-public:
     void foo()
     {
         std::cout << "CRTP: foo";
@@ -20,15 +17,14 @@ public:
     }
 };
 
-class Derived : public Base<Derived>
+struct Derived : public Base<Derived>
 {
-public:
     void bar() { std::cout << "bar\n"; }
 };
- 
+
 int main()
 {
-  Derived d;
-  d.foo();
-  d.bar();
+    Derived d;
+    d.foo();
+    d.bar();
 }
