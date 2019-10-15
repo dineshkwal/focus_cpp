@@ -1,14 +1,22 @@
 #include <iostream>
  
+template<class T>
+class CRTPHelper
+{
+public:
+    T& underlying() { return static_cast<T&>(*this); }
+    
+    const T& underlying() const { return static_cast<const T&>(*this); }
+};
+
 template<class DerivedT>
-class Base
+class Base : public CRTPHelper<DerivedT>
 {
 public:
     void foo()
     {
-        auto& d = static_cast<DerivedT&>(*this);
         std::cout << "CRTP: foo";
-        d.bar();
+        this->underlying().bar();
     }
 };
 
