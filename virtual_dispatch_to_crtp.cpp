@@ -1,6 +1,6 @@
 #include <iostream>
 
-namespace v1 {
+namespace vdispatch {
     struct A
     {
         virtual ~A() = default;
@@ -26,7 +26,7 @@ namespace v1 {
     };
 }
 
-namespace v2 {
+namespace crtp {
     template<typename T>
     struct A
     {
@@ -51,9 +51,9 @@ namespace v2 {
 
 int main()
 {
-    v1::C c1;
+    vdispatch::C c1;
     c1.bigAndSlow();
     
-    v2::C c2;
+    crtp::C c2;
     c2.bigAndSlow();
 }
